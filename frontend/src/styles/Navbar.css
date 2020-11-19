@@ -23,7 +23,7 @@ nav li {
 }
 
 nav li a {
-  display: block;
+  display: inline-block;
   color: #f5c518;
   padding: 5px 8px;
   text-decoration: none;
@@ -37,7 +37,37 @@ nav li a {
 .search-box {
   display: flex;
   align-items: center;
-  margin: 0 20px;
+  /* width: max-content; */
+  margin: 0 auto;
+  overflow: hidden;
+  box-shadow: 0px 0px 7px #f5c518;
+}
+
+.search-box input {
+  color: white;
+  background-color: transparent;
+  font-size: 20px;
+  
+  width: 500px;
+  height: 40px;
+  padding: 10px;
+  
+  border: none;
+  border-radius: 8px;
+
+  transition: 200ms;
+  outline: none;
+}
+
+.search-box button {
+  background-color: transparent;
+  border: none;
+  
+  height: 40px;
+  
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
 }
 
 .search-box button img {
@@ -45,27 +75,6 @@ nav li a {
   width: 24px;
 }
 
-.search-box button {
-  background-color: #fff;
-  
-  height: 40px;
-  
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-nav input[type=search] {
-  background-color: #fff;
-  font-size: 20px;
-  
-  padding: 10px;
-  height: 40px;
-  width: 600px;
-
-  border-radius: 8px;
-
-  outline: none;
-}
 
 nav li a img {
   margin-right: 6px;

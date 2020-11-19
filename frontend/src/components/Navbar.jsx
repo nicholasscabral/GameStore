@@ -14,7 +14,7 @@ function Navbar() {
       <img src={logo} alt=""/>
 
       <div className="search-box">
-        <input type="search" placeholder=" Enter a game name"/>
+        <input type="search" placeholder="Enter a game name"/>
         <button><img src={lupa} alt=""/></button>
       </div>
 
