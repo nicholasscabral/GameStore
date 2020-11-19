@@ -1,0 +1,79 @@
+#main {  
+  margin: 50px 50px;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.games-grid li {
+  color: white;
+  background-color: rgb(0, 0, 0);
+  list-style: none;
+
+  margin-left: 40px;
+
+  /* border: 2px solid rgb(196, 184, 23); */
+  border-radius: 8px;
+
+  height: 400px;
+  width: 200px;
+  
+  padding: 10px 10px 0px;
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: space-between;
+
+  /* text-align: center; */
+
+  transition: 200ms; /* minha ideia */
+}
+
+.games-grid li img {
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+}
+
+.games-grid li .info {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.games-grid li .info p {
+  margin-bottom: 5px;
+}
+
+.games-grid li .info button {
+  background-color: #f5c518;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 8px;
+  text-align: center;
+  font-size: 18px;
+
+  border-radius: 8px;
+  border: 2px solid #fad653;
+  cursor: pointer;
+
+  transition: 200ms;
+
+}
+
+.games-grid li .info button:hover {
+  background-color: #fad653;
+  border: 2px solid #f5c518;
+}
+
+.games-grid li .info button img {
+  height: 25px;
+  width: 25px;
+}
