@@ -4,22 +4,22 @@
 
 .games-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
 }
 
-.games-grid li {
-  color: white;
+.games-grid .card li {
+  color: rgb(218, 218, 218);
   background-color: rgb(0, 0, 0);
   list-style: none;
 
-  margin-left: 40px;
+  margin: 0 20px;
 
   /* border: 2px solid rgb(196, 184, 23); */
   border-radius: 8px;
 
-  height: 400px;
-  width: 200px;
+  height: 425px;
+  width: 250px;
   
   padding: 10px 10px 0px;
 
@@ -27,30 +27,31 @@
   flex-direction: column;
   /* align-items: center; */
   justify-content: space-between;
+  box-shadow: 0px 0px 4px #f5c518;
 
-  /* text-align: center; */
+  text-align: center;
 
   transition: 200ms; /* minha ideia */
 }
 
-.games-grid li img {
+.games-grid .card li img {
   width: 100%;
   height: 60%;
   object-fit: cover;
 }
 
-.games-grid li .info {
+.games-grid .card li .info {
   display: flex;
   flex-direction: column;
   font-size: 18px;
   margin-bottom: 20px;
 }
 
-.games-grid li .info p {
-  margin-bottom: 5px;
+.games-grid .card li .info p {
+  margin-bottom: 12.5px;
 }
 
-.games-grid li .info button {
+.games-grid .card li .info button {
   background-color: #f5c518;
   display: flex;
   justify-content: space-between;
@@ -65,15 +66,16 @@
   cursor: pointer;
 
   transition: 200ms;
+  outline: none;
 
 }
 
-.games-grid li .info button:hover {
+.games-grid .card li .info button:hover {
   background-color: #fad653;
   border: 2px solid #f5c518;
 }
 
-.games-grid li .info button img {
+.games-grid .card li .info button img {
   height: 25px;
   width: 25px;
 }
