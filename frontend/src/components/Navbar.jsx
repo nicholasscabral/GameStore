@@ -20,7 +20,7 @@ function Navbar() {
 
       <ul>
         <li><a href="/"><img src={control} alt="controle"/>Catalogo</a></li>
-        <li><a href="/"><img src={shoppingCart} alt="carrinho"/>Carrinho</a></li>
+        <li><a href="/shoppingcart"><img src={shoppingCart} alt="carrinho"/>Carrinho</a></li>
       </ul>
     </nav>
   )
