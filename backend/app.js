@@ -2,12 +2,14 @@ const express = require('express')
 const mysql = require('mysql')
 const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const app = express()
 dotenv.config({ path: './.env' })
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(cors())
 
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -21,7 +23,7 @@ db.connect( err => {
   else console.log("DATABASE connected")
 })
 
-app.get('/', (req, res) => {
+app.get('/catalog', (req, res) => {
   db.query('SELECT * FROM catalog', (err, results) => {
     if (err) return res.status(404).send("nenhum jogo encontrado")
     else return res.status(200).send(results)
