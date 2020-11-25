@@ -2,7 +2,6 @@ import React from 'react';
 import api from '../services/api'
 
 import Navbar from '../components/Navbar'
-import jogo from '../assets/jogo.png'
 import shoppingCart from '../assets/carrinho.svg'
 
 import '../styles/Landing.css';
@@ -10,6 +9,17 @@ import '../styles/Global.css'
 
 function Landing() {
   window.onload = getCatalog
+
+  function addGameToCart(event) {
+    var game = event.target.parentNode.parentNode.parentNode
+    var gameId = game.id
+
+    api.post('/addCart/' + gameId).then(response => {
+      console.log(response)
+    })
+
+  }
+
   function getCatalog() {
     api.get('/catalog').then(response => {
 
@@ -35,7 +45,10 @@ function Landing() {
         card.appendChild(gameDetails)
         gamesGrid.appendChild(card)
       })
-
+    }).then(() => {
+      document.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", addGameToCart)
+      })
     })
   }
 

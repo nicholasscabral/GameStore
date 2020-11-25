@@ -30,6 +30,24 @@ app.get('/catalog', (req, res) => {
   })
 })
 
+app.post('/addCart/:id', (req, res) => {
+  const id = req.params.id
+
+  db.query('SELECT * FROM catalog WHERE id = ?', id, (err, result) => {
+    if (err) res.status(400).send({ success: false })
+    else {
+      const gameId = result[0].id
+
+      db.query('INSERT INTO cart SET ?', {gameId: gameId}, (err, result) => {
+        if (err) {
+          console.log({error: err})
+        }
+        else return res.status(200).send({ success: true })
+      })
+    }    
+  })
+})
+
 app.listen(4000, () => {
   console.log("API running...")
 })
