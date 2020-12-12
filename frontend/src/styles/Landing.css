@@ -82,6 +82,11 @@
   border: 2px solid #f5c518;
 }
 
+.games-grid .card li .info button.hoverOff {
+  background-color: black;
+  cursor: default;
+}
+
 .games-grid .card li .info button img {
   height: 25px;
   width: 25px;
