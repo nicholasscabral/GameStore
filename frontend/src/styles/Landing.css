@@ -91,3 +91,12 @@
   height: 25px;
   width: 25px;
 }
+
+.games-grid.no-Grid {
+  display: inline;
+}
+
+.games-grid .NoGameFoundMessage {
+  font-size: 36px;
+  color: #f5c518;
+}
