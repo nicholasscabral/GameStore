@@ -30,6 +30,15 @@ app.get('/catalog', (req, res) => {
   })
 })
 
+app.get('/searchGame/:searchValue', (req, res) => {
+  const { searchValue } = req.params
+
+  db.query('SELECT * FROM catalog WHERE title LIKE ?', `%${searchValue}%`, (err, results) => {
+    if (err) return res.status(500).send(err)
+    else return res.status(200).send({ success: true, results: results })
+  })
+})
+
 app.post('/addCart/:id', (req, res) => {
   const id = req.params.id
 
