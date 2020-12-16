@@ -39,6 +39,23 @@ app.get('/searchGame/:searchValue', (req, res) => {
   })
 })
 
+app.get('/getGame/:id', (req, res) => {
+  const id = req.params.id
+  
+  db.query('SELECT * FROM catalog WHERE id = ?', id, (err, result) => {
+    if (err) return res.status(500).send(err)
+    else return res.status(200).send(result)
+  })
+})
+
+// ROTA EM MANUTENÇÃO 
+app.get('/shoppingCart', (req, res) => {
+  db.query('SELECT * FROM cart', (err, results) => {
+    if (err) return res.status(500).send(err)
+    else return res.status(200).send(results)
+  })
+})
+
 app.post('/addCart/:id', (req, res) => {
   const id = req.params.id
 
