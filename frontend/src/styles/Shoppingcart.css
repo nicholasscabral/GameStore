@@ -18,6 +18,9 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  max-width: 550px;
+  max-height: 110px;
   
   background-color: black;
   color: var(--soft-white);
@@ -29,7 +32,7 @@ h1 {
 }
 
 .selected-games .card li img {
-  height: 15%;
+  height: 110px;
   width: 15%;
 }
 
