@@ -15,12 +15,18 @@ function ShoppingCart() {
 
       var games = response.data
       var selectedGames = document.querySelector('.selected-games')
+      var bill = document.querySelector('.prices')
+      var payment = document.querySelector('.payment')
+      var totalPrice = 0
 
       games.forEach(game => {
-        api.get('/getGame/' + game.gameId).then(response => {
 
-          var game = response.data[0]
-          console.log(game)
+          totalPrice += Number(game.price)
+
+          var pricetag = document.createElement('p')
+          pricetag.setAttribute('class', 'price')
+          pricetag.innerHTML = `R$ ${game.price}`
+
           var card = document.createElement('div')
           card.setAttribute('class', 'card')
           card.setAttribute('id', game.id)
@@ -32,11 +38,16 @@ function ShoppingCart() {
             <p>R$ ${game.price}</p>
             <button> Remover </button>
           `
-
+          bill.appendChild(pricetag)
           card.appendChild(gameDetails)
           selectedGames.appendChild(card)
-        })
+    
       })
+
+      payment.innerHTML = `
+        <p>Total: R$ ${totalPrice} </p>
+        <button>Finalizar compra</button>
+      `
     })
   }
 
@@ -52,11 +63,12 @@ function ShoppingCart() {
         <div className="shopping-cart">
           <h1>Subtotal</h1>
           <div className="subtotal">
-            <p className="price">R$280</p>
-            <p className="price">R$280</p>
-            <p className="price">R$280</p>
-            <p className="total">Total: R$ 840</p>
-            <button>Finalizar compra</button>
+            <div className="prices">
+
+            </div>
+            <div className="payment">
+
+            </div>
           </div>
         </div>
       </div>
