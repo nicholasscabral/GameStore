@@ -6,7 +6,7 @@
   Made with :coffee: by <a href="https://www.linkedin.com/in/nicholas-cabral-dos-anjos-13b3981a7/" target="_blank"> Nicholasscabral </a> 
 </p>
 
-__<p align="center">Covid tracker é uma aplicação desenvolvida para mostrar dados sobre o Covid-19 por todo o mundo</p>__
+__<p align="center">GameStore é uma aplicação web que simula uma loja de jogos</p>__
 
 <p align="center">
   <img src="https://img.shields.io/github/last-commit/nicholasscabral/GameStore"> 
