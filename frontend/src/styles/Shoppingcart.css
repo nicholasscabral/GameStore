@@ -72,7 +72,7 @@ h1 {
   width: 400px;
   max-width: 400px;
   min-height: 260px;
-  padding: 40px 0;
+  padding: 40px;
 
   font-size: 20px;
   text-align: center;
@@ -82,6 +82,15 @@ h1 {
 
 .shopping-cart .subtotal p {
   margin: 10px 0;
+}
+
+.shopping-cart .subtotal hr {
+  margin: 25px 0;
+}
+
+.shopping-cart .subtotal #total {
+  font-size: 32px;
+  font-weight: bold;
 }
 
 .shopping-cart .subtotal button {
