@@ -23,5 +23,6 @@ export function addGameToCart(event) {
     const success = response.data.success
 
     if (success) changeButtonStyle(gameId)
+    else alert("jogo ja adicionado")
   })
 }
