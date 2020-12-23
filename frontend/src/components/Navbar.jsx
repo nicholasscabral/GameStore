@@ -12,6 +12,10 @@ import api from '../services/api';
 
 function Navbar() {
 
+  window.addEventListener('keypress', (event) => {
+    if (event.code === 'Enter') searchGame()
+  })
+
   function searchGame() {
     var searchValue = document.querySelector('.searchInput').value
 
