@@ -9,6 +9,18 @@ import '../styles/Global.css'
 function ShoppingCart() {
   window.onload = getShoppingCart
 
+  function removeGame(event) {
+    const gameId = event.target.getAttribute('id')
+    console.log(event.target)
+    console.log(gameId)
+
+    api.post('/deleteFromCart/' + gameId).then(response => {
+      const success = response.data.success
+
+      if (success) window.location.reload()
+    })
+  }
+
   function getShoppingCart() {
     api.get('/shoppingCart').then(response =>{
       console.log(response)
@@ -25,7 +37,7 @@ function ShoppingCart() {
 
           var pricetag = document.createElement('p')
           pricetag.setAttribute('class', 'price')
-          pricetag.innerHTML = `R$ ${game.price}`
+          pricetag.innerHTML = `${game.title} R$ ${game.price}`
 
           var card = document.createElement('div')
           card.setAttribute('class', 'card')
@@ -36,7 +48,7 @@ function ShoppingCart() {
             <img src="${game.imgUrl}" />
             <p> ${game.title}</p>
             <p>R$ ${game.price}</p>
-            <button> Remover </button>
+            <button id="${game.id}"> Remover </button>
           `
           bill.appendChild(pricetag)
           card.appendChild(gameDetails)
@@ -44,10 +56,14 @@ function ShoppingCart() {
     
       })
 
-      payment.innerHTML = `
-        <p>Total: R$ ${totalPrice} </p>
+      payment.innerHTML = ` <hr>
+        <p id="total">Total: R$ ${totalPrice} </p>
         <button>Finalizar compra</button>
       `
+    }).then(() => {
+      document.querySelectorAll("button").forEach(button => {
+        button.addEventListener('click', removeGame)
+      })
     })
   }
 

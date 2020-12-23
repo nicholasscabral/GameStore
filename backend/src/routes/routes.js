@@ -62,9 +62,19 @@ const getQueryRes = async (query) => new Promise((resolve, reject) => {
   })
 }).catch(err => reject(err));
 
+function removeGameFromCart(req, res) {
+  const gameId = req.params.id;
+
+  db.query('DELETE FROM cart WHERE gameId = ?', gameId, (err, result) => {
+    if (err) console.log(err)
+    else return res.status(200).send({ success: true });
+  })
+}
+
 module.exports = {
   getCatalog,
   searchGame,
   shoppingCart,
-  addGameToCart
+  addGameToCart,
+  removeGameFromCart
 }
