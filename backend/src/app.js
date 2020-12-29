@@ -5,7 +5,8 @@ const {
   addGameToCart, 
   addGame, 
   removeGameFromCart,
-  registerAdmin
+  registerAdmin,
+  loginAdmin
 } = require('./routes/routes')
 
 const express = require('express')
@@ -31,6 +32,8 @@ app.post('/', addGame)
 app.post('/deleteFromCart/:id', removeGameFromCart)
 
 app.post('/register-admin', registerAdmin)
+
+app.post('/admin-auth', loginAdmin)
 
 app.listen(4000, () => {
   console.log("API running...")

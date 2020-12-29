@@ -1,6 +1,10 @@
 const db = require('../database/db');
 const Promise = require('bluebird')
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv')
+
+dotenv.config({ path: './.env' })
 
 function getCatalog(req, res) {
   db.query('SELECT * FROM catalog', (err, results) => {
@@ -107,6 +111,28 @@ async function registerAdmin(req, res) {
   }
 }
 
+async function loginAdmin(req, res) {
+  const { email, password } = req.body
+
+  if (!email || !password) return res.status(400).send({ message: 'Invalid credencials'})
+
+  const result = await getQueryRes(`SELECT * FROM admin WHERE email = "${email}"`)
+  const admin = result[0]
+
+  var passwordMatches = await bcrypt.compare(password, admin.password)
+
+  if (passwordMatches) {
+    jwt.sign({id: admin.id, email: admin.email}, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN
+    }, (err, token) => {
+      if (err) return res.status(500).send(err)
+      else return res.status(200).send({success: true, token: token})
+    })
+  } else {
+    return res.status(401).send({ message: "email or password incorrect" })
+  }
+}
+
 module.exports = {
   getCatalog,
   searchGame,
@@ -114,5 +140,6 @@ module.exports = {
   addGameToCart,
   addGame,
   removeGameFromCart,
-  registerAdmin
+  registerAdmin,
+  loginAdmin
 }
