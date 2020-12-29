@@ -70,7 +70,7 @@
 
 .login-form input[type="text"]:focus,
 .login-form input[type="password"]:focus {
-  box-shadow: 0px 0px 10px var(--primary-color);
+  box-shadow: 0px 0px 15px var(--primary-color);
 }
 
 .login-form input[type="submit"] {
@@ -86,8 +86,7 @@
   font-size: 18px;
 
   border-radius: 8px;
-  /* box-shadow: 0px 0px 8px var(--primary-color); */
-  border: 2px solid var(--primary-color);
+  border: 1px solid var(--primary-color);
   color: var(--soft-white);
 
   cursor: pointer;

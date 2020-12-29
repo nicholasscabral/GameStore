@@ -11,7 +11,7 @@ function LoginPage() {
 
       <nav>
         <img src={logo} alt=""/>
-        <h2>Admin-Portal</h2>
+        <h3>Admin-Portal</h3>
       </nav>
 
       <div className="login-form">
