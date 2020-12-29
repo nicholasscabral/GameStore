@@ -92,14 +92,19 @@ async function registerAdmin(req, res) {
     return res.status(400).send({ message: "Passwords do not match"})
   }
 
-  const hashedPassword = await bcrypt.hash(password, 8)
+  const result = await getQueryRes(`SELECT * FROM admin WHERE email = "${email}"`)
 
-  db.query("INSERT INTO admin SET ?", { username: username, email: email, password: hashedPassword }, (err, result) => {
-    if (err) return res.status(500).send({ message: "Internal server error" })
-    else return res.status(200).send({ success: true, message: "Admin registered" })
-  })
+  if (result.length > 0) {
+    return res.status(400).send({success: false, message: "Email already in use"})
+  }
+  else {
+    const hashedPassword = await bcrypt.hash(password, 8)
 
-
+    db.query("INSERT INTO admin SET ?", { username: username, email: email, password: hashedPassword }, (err, result) => {
+      if (err) return res.status(500).send({ message: "Internal server error" })
+      else return res.status(200).send({ success: true, message: "Admin registered" })
+    })
+  }
 }
 
 module.exports = {
