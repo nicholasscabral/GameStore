@@ -1,5 +1,6 @@
 const db = require('../database/db');
 const Promise = require('bluebird')
+const bcrypt = require('bcryptjs');
 
 function getCatalog(req, res) {
   db.query('SELECT * FROM catalog', (err, results) => {
@@ -62,6 +63,15 @@ const getQueryRes = async (query) => new Promise((resolve, reject) => {
   })
 }).catch(err => reject(err));
 
+function addGame(req, res) {
+  const { title, price, year, imgUrl } = req.body;
+
+  db.query('INSERT INTO catalog SET ?', {title: title, price: price, year: year, imgUrl: imgUrl}, (err, result) => {
+    if (err) return res.status(500).send(err);
+    else return res.status(200).send('JOGO CADASTRADO')
+  })
+}
+
 function removeGameFromCart(req, res) {
   const gameId = req.params.id;
 
@@ -71,10 +81,33 @@ function removeGameFromCart(req, res) {
   })
 }
 
+async function registerAdmin(req, res) {
+  const { username, email, password, passwordConfirm } = req.body;
+
+  if (!username || !email || !password) {
+    return res.status(400).send({ message: "Invalid credencials"})
+  }
+
+  if (password !== passwordConfirm) {
+    return res.status(400).send({ message: "Passwords do not match"})
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 8)
+
+  db.query("INSERT INTO admin SET ?", { username: username, email: email, password: hashedPassword }, (err, result) => {
+    if (err) return res.status(500).send({ message: "Internal server error" })
+    else return res.status(200).send({ success: true, message: "Admin registered" })
+  })
+
+
+}
+
 module.exports = {
   getCatalog,
   searchGame,
   shoppingCart,
   addGameToCart,
-  removeGameFromCart
+  addGame,
+  removeGameFromCart,
+  registerAdmin
 }
