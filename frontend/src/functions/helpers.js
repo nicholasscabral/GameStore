@@ -13,16 +13,13 @@ export function changeButtonStyle(id) {
   `
 }
 
-export function addGameToCart(event) {
-  var game = event.target.parentNode.parentNode.parentNode
-  var gameId = game.id
-
+export function addGameToCart(gameId) {
   api.post('/addCart/' + gameId).then(response => {
     console.log(response)
 
     const success = response.data.success
 
     if (success) changeButtonStyle(gameId)
-    else alert("jogo ja adicionado")
+    else alert("game already added")
   })
 }
