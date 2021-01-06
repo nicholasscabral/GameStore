@@ -112,24 +112,24 @@ async function registerAdmin(req, res) {
 }
 
 async function loginAdmin(req, res) {
-  const { email, password } = req.body
+  const { username, password } = req.body
 
-  if (!email || !password) return res.status(400).send({ message: 'Invalid credencials'})
+  if (!username || !password) return res.status(400).send({ message: 'Invalid credencials'})
 
-  const result = await getQueryRes(`SELECT * FROM admin WHERE email = "${email}"`)
+  const result = await getQueryRes(`SELECT * FROM admin WHERE username = "${username}"`)
   const admin = result[0]
 
   var passwordMatches = await bcrypt.compare(password, admin.password)
 
   if (passwordMatches) {
-    jwt.sign({id: admin.id, email: admin.email}, process.env.JWT_SECRET, {
+    jwt.sign({id: admin.id, username: admin.username}, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN
     }, (err, token) => {
       if (err) return res.status(500).send(err)
       else return res.status(200).send({success: true, token: token})
     })
   } else {
-    return res.status(401).send({ message: "email or password incorrect" })
+    return res.status(401).send({ message: "username or password incorrect" })
   }
 }
 
