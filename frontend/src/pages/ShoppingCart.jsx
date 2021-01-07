@@ -22,10 +22,12 @@ function ShoppingCart() {
     api.get('/shoppingCart').then(response =>{
       const games = response.data
       setGames(games)
-      
-      games.forEach(game => {
-        setTotalPrice(prevValue => prevValue + Number(game.price))
-      })
+
+      if (games.length > 0) {
+        games.forEach(game => {
+          setTotalPrice(prevValue => prevValue + Number(game.price))
+        })
+      }
     })
   }
 
@@ -40,13 +42,13 @@ function ShoppingCart() {
       <div id="main">
         <div className="selected-games">
           <h1>Seu carrinho de compras </h1>
-          {games.map(game => (
+          {games.length === 0 ? (<p className="emptyCartMessage">Carrinho vazio</p>) : games.map(game => (
             <div className="card" id={game.id}>
               <li>
                 <img src={game.imgUrl} />
                 <p> {game.title}</p>
                 <p>R$ {game.price}</p>
-                <button id={game.id} onClick={() => {removeGameFromCart(game.id)}}> Remover </button>
+                <button onClick={() => {removeGameFromCart(game.id)}}> Remover </button>
               </li>
             </div>
           ))}
@@ -56,7 +58,7 @@ function ShoppingCart() {
           <h1>Subtotal</h1>
           <div className="subtotal">
             <div className="prices">
-              {games.map(game => (
+              {games.length === 0 ? (<p>Carrinho vazio</p>) : games.map(game => (
                 <p>{game.title} : R$ {game.price}</p>
               ))}
             </div>
