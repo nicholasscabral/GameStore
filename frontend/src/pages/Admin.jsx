@@ -26,7 +26,6 @@ function AdminPage() {
     const response = await api.get('/getGame/' + gameId)
     const game = response.data[0];
     setSelectedGame(game);
-    console.log(selectedGame);
   }
 
   useEffect(() => {
@@ -51,8 +50,10 @@ function AdminPage() {
             <li>
               <img src={game.imgUrl} />
               <p> {game.title}</p>
-              <button onClick={() => {removeGame(game.id)}}> Deletar </button>
-              <button onClick={() => {updateGame(game.id)}}> Editar </button>
+              <div className="buttons">
+                <button onClick={() => {removeGame(game.id)}}> Deletar </button>
+                <button onClick={() => {updateGame(game.id)}}> Editar </button>
+              </div>
             </li>
           </div>
           ))}

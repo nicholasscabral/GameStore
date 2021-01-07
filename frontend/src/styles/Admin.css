@@ -67,6 +67,10 @@ nav li button:hover {
   width: 15%;
 }
 
+.games .game .buttons button {
+  margin: 0px 10px;
+}
+
 .games .game li button,
 .update-field button {
   background-color: black;
@@ -141,4 +145,9 @@ nav li button:hover {
   padding: 15px;
 
   outline:none;
+}
+
+.update-field #update textarea {
+  height: 150px;
+  width: 400px;
 }
