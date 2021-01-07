@@ -6,6 +6,8 @@ import ShoppingCart from './pages/ShoppingCart'
 import Login from './pages/Login'
 import Admin from './pages/Admin'
 
+import ProtectedRoute from './components/ProtectedRoute'
+
 function Routes() {
   return (
     <BrowserRouter>
@@ -14,7 +16,7 @@ function Routes() {
         <Route path="/shoppingcart" exact component={ShoppingCart} />
 
         <Route path="/admin-login" component={Login} />
-        <Route path="/admin-portal" component={Admin} />
+        <ProtectedRoute path="/admin-portal" component={Admin} />
       </Switch>
     </BrowserRouter>
   )
