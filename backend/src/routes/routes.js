@@ -22,6 +22,15 @@ function searchGame(req, res) {
   })
 }
 
+function getGamebyId(req, res) {
+  const id = req.params.id
+
+  db.query('SELECT * FROM catalog WHERE id = ?', id, (err, result) => {
+    if (err) return res.status(500).send(err)
+    else return res.status(200).send(result)
+  })
+}
+
 async function shoppingCart(req, res) {
   const games = await getQueryRes('SELECT * FROM cart')
 
@@ -136,6 +145,7 @@ async function loginAdmin(req, res) {
 module.exports = {
   getCatalog,
   searchGame,
+  getGamebyId,
   shoppingCart,
   addGameToCart,
   addGame,

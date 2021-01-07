@@ -1,6 +1,7 @@
 const { 
   getCatalog, 
-  searchGame, 
+  searchGame,
+  getGamebyId, 
   shoppingCart, 
   addGameToCart, 
   addGame, 
@@ -22,6 +23,8 @@ app.use(cors())
 app.get('/catalog', getCatalog)
 
 app.get('/searchGame/:searchValue', searchGame)
+
+app.get('/getGame/:id', getGamebyId)
 
 app.get('/shoppingCart', shoppingCart)
 
