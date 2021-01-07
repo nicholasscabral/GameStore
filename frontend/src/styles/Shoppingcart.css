@@ -36,6 +36,12 @@ h1 {
   width: 15%;
 }
 
+.selected-games .emptyCartMessage {
+  text-align: center;
+  font-size: 32px;
+  color: var(--primary-color);
+}
+
 .selected-games .card li button,
 .shopping-cart .subtotal button {
   background-color: black;
