@@ -16,6 +16,7 @@ function LoginPage() {
   async function handleSubmit() {
     api.post('/admin-auth', {username: username, password: password}).then((response) => {
       const success = response.data.success
+      window.localStorage.setItem('token', response.data.token)
 
       if (success) setSuccessfulLogin(true)
     })
