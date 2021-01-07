@@ -19,7 +19,12 @@ function AdminPage() {
   }
 
   async function removeGame(gameId) {
-
+    console.log(gameId);
+    if (window.confirm("Are you sure you want to delete this game")) {
+      api.post('/deleteGame/' + gameId).then(response => {
+        if (response.data.success) window.location.reload()
+      })
+    } else return 
   }
 
   async function updateGame(gameId) {

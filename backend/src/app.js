@@ -2,7 +2,8 @@ const {
   getCatalog, 
   searchGame,
   getGamebyId, 
-  shoppingCart, 
+  shoppingCart,
+  deleteGame, 
   addGameToCart, 
   addGame, 
   removeGameFromCart,
@@ -31,6 +32,8 @@ app.get('/shoppingCart', shoppingCart)
 app.post('/addCart/:id', addGameToCart)
 
 app.post('/', addGame)
+
+app.post('/deleteGame/:id', deleteGame)
 
 app.post('/deleteFromCart/:id', removeGameFromCart)
 

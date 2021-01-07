@@ -31,6 +31,15 @@ function getGamebyId(req, res) {
   })
 }
 
+function deleteGame(req, res) {
+  const id = req.params.id
+
+  db.query('DELETE FROM catalog WHERE id = ?', id, (err, result) => {
+    if (err) return res.status(500).send({ success: false, error: err })
+    else return res.status(200).send({ success: true, message: "Game deleted successfully"})
+  })
+}
+
 async function shoppingCart(req, res) {
   const games = await getQueryRes('SELECT * FROM cart')
 
@@ -146,6 +155,7 @@ module.exports = {
   getCatalog,
   searchGame,
   getGamebyId,
+  deleteGame,
   shoppingCart,
   addGameToCart,
   addGame,
