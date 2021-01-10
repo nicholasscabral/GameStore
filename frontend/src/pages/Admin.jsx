@@ -2,14 +2,28 @@ import React, { useState, useEffect } from 'react'
 import api from '../services/api';
 
 import logo from '../assets/logo.svg'
+import add from '../assets/add.svg'
 
 import '../styles/Admin.css'
 import '../styles/Global.css'
 
 function AdminPage() {
 
+  
   const [games, setGames] = useState([])
   const [selectedGame, setSelectedGame] = useState([])
+  const initialValues = {
+    imgUrl: selectedGame.imgUrl,
+    title: selectedGame.title,
+    price: selectedGame.price,
+    year: selectedGame.year
+  }
+  const [currentValues, setCurrentValues] = useState(initialValues)
+
+  function handleChange(event) {
+    var currentValue = event.target.value
+    setCurrentValues(currentValue)
+  }
 
   function getCatalog() {
     api.get("/catalog").then((response) => {
@@ -30,6 +44,7 @@ function AdminPage() {
   async function updateGame(gameId) {
     const response = await api.get('/getGame/' + gameId)
     const game = response.data[0];
+    setCurrentValues(game)
     setSelectedGame(game);
   }
 
@@ -41,10 +56,10 @@ function AdminPage() {
     <div>
 
       <nav>
-        <img src={logo} alt=""/>
+        <a href="/"><img src={logo} alt=""/></a>
         <ul>
-          <li><button>Add game</button></li>
-          <li><h3>Admin-Portal</h3></li>
+          <li><button><img src={add}/>Add game</button></li>
+          <li><h3>Admin-Portal </h3></li>
         </ul>
       </nav>
 
@@ -68,13 +83,13 @@ function AdminPage() {
           {selectedGame.length === 0 ? (<p>Nenhum jogo selecionado</p>) : (
             <div id="update">
               <p>ImgUrl:</p> 
-              <textarea type="text" value={selectedGame.imgUrl}/> 
+              <textarea type="text" onChange={handleChange} value={currentValues.imgUrl}/> 
               <p>Title:</p> 
-              <input type="text" value={selectedGame.title}/>
+              <input type="text" onChange={handleChange} value={currentValues.title}/>
               <p>Price:</p> 
-              <input type="text" value={selectedGame.price}/>
+              <input type="text" onChange={handleChange} value={currentValues.price}/>
               <p>Year:</p> 
-              <input type="text" value={selectedGame.year}/>
+              <input type="text" onChange={handleChange} value={currentValues.year}/>
               <button> Update </button>
             </div>
           )}
