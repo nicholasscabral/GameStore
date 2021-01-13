@@ -1,10 +1,11 @@
 #main {  
-  margin: 50px 50px;
+  margin: 0px 50px 50px;
 }
 
 .games-grid {
+  padding-top: 200px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 30px;
 }
 
