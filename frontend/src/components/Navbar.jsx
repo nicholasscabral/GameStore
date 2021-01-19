@@ -61,10 +61,10 @@ function Navbar() {
           gamesGrid.appendChild(card)
         })
       }
-    }).then(() => {
-      document.querySelectorAll("button").forEach(button => {
-        button.addEventListener("click", addGameToCart)
-      })
+    // }).then(() => {
+    //   document.querySelectorAll("button").forEach(button => {
+    //     button.addEventListener("click", addGameToCart)
+    //   })
     })
   }
 
