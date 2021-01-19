@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 
+import { removeGameFromCart } from '../functions/helpers'
+
 import Navbar from '../components/Navbar'
 
 import '../styles/Shoppingcart.css'
@@ -9,14 +11,6 @@ import '../styles/Global.css'
 function ShoppingCart() {
   const [games, setGames] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
-  
-  function removeGameFromCart(gameId) {
-    api.post('/deleteFromCart/' + gameId).then(response => {
-      const success = response.data.success
-      
-      if (success) window.location.reload()
-    })
-  }
   
   function getShoppingCart() {
     api.get('/shoppingCart').then(response =>{
