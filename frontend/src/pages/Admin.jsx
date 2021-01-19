@@ -9,10 +9,12 @@ import '../styles/Global.css'
 
 function AdminPage() {
 
-  
+  const loggedUser = localStorage.getItem('loggedUser')
+
   const [games, setGames] = useState([])
   const [selectedGame, setSelectedGame] = useState([])
   const initialValues = {
+    id: selectedGame.id,
     imgUrl: selectedGame.imgUrl,
     title: selectedGame.title,
     price: selectedGame.price,
@@ -20,9 +22,16 @@ function AdminPage() {
   }
   const [currentValues, setCurrentValues] = useState(initialValues)
 
-  function handleChange(event) {
-    var currentValue = event.target.value
-    setCurrentValues(currentValue)
+  async function handleSubmit() {
+    console.log(currentValues)
+    api.post('/updateGame/' + selectedGame.id, {
+      imgUrl: currentValues.imgUrl, 
+      title: currentValues.title,
+      price: currentValues.price,
+      year: currentValues.year
+    }).then(response => {
+      console.log(response);
+    })
   }
 
   function getCatalog() {
@@ -30,6 +39,10 @@ function AdminPage() {
       const games = response.data;
       setGames(games);
     });
+  }
+
+  async function addGame() {
+    setSelectedGame([])
   }
 
   async function removeGame(gameId) {
@@ -44,8 +57,16 @@ function AdminPage() {
   async function updateGame(gameId) {
     const response = await api.get('/getGame/' + gameId)
     const game = response.data[0];
-    setCurrentValues(game)
+
+    const gameValues = {
+      imgUrl: game.imgUrl,
+      title: game.title,
+      price: game.price,
+      year: game.year
+    }
+
     setSelectedGame(game);
+    setCurrentValues(gameValues)
   }
 
   useEffect(() => {
@@ -58,15 +79,15 @@ function AdminPage() {
       <nav>
         <a href="/"><img src={logo} alt=""/></a>
         <ul>
-          <li><button><img src={add}/>Add game</button></li>
-          <li><h3>Admin-Portal </h3></li>
+          <li><button onClick={() => {addGame()}}><img src={add}/>Add game</button></li>
+          <li><h3>{`Hi, ${loggedUser}`}</h3></li>
         </ul>
       </nav>
 
       <div id="container">
         <div className="games">
           {games.map((game) => (
-            <div className="game" id={game.id}>
+          <div className="game" id={game.id}>
             <li>
               <img src={game.imgUrl} />
               <p> {game.title}</p>
@@ -82,15 +103,17 @@ function AdminPage() {
         <div className="update-field">
           {selectedGame.length === 0 ? (<p>Nenhum jogo selecionado</p>) : (
             <div id="update">
-              <p>ImgUrl:</p> 
-              <textarea type="text" onChange={handleChange} value={currentValues.imgUrl}/> 
-              <p>Title:</p> 
-              <input type="text" onChange={handleChange} value={currentValues.title}/>
-              <p>Price:</p> 
-              <input type="text" onChange={handleChange} value={currentValues.price}/>
-              <p>Year:</p> 
-              <input type="text" onChange={handleChange} value={currentValues.year}/>
-              <button> Update </button>
+              <form onSubmit={e => {e.preventDefault(); handleSubmit()}}>
+                <p>ImgUrl:</p> 
+                <textarea type="text" onChange={e => setCurrentValues({imgUrl: e.target.value})} value={currentValues.imgUrl}/> 
+                <p>Title:</p> 
+                <input type="text" onChange={e => setCurrentValues({title: e.target.value})} value={currentValues.title}/>
+                <p>Price:</p> 
+                <input type="text" onChange={e => setCurrentValues({price: e.target.value})} value={currentValues.price}/>
+                <p>Year:</p> 
+                <input type="text" onChange={e => setCurrentValues({year: e.target.value})} value={currentValues.year}/> <br/>
+                <button> Update </button>
+              </form>
             </div>
           )}
         </div>

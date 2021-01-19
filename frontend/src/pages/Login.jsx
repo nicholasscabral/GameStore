@@ -17,6 +17,7 @@ function LoginPage() {
     api.post('/admin-auth', {username: username, password: password}).then((response) => {
       const success = response.data.success
       window.localStorage.setItem('token', response.data.token)
+      window.localStorage.setItem('loggedUser', response.data.loggedUser)
 
       if (success) setSuccessfulLogin(true)
     })
@@ -24,7 +25,7 @@ function LoginPage() {
 
   return (
     successfulLogin? <Redirect to="Admin-portal"/> : (
-      <div id="container">
+      <div>
 
         <nav>
           <img src={logo} alt=""/>
