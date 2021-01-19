@@ -40,6 +40,57 @@ function deleteGame(req, res) {
   })
 }
 
+function updateGame(req, res) {
+  console.log(req.body)
+  const id = req.params.id
+  const { imgUrl, title, price, year } = req.body
+  const defaultQuery = 'UPDATE catalog SET '
+  let query = defaultQuery
+  const queryData = []
+
+  if (imgUrl) {
+    console.log(imgUrl)
+    query += 'imgUrl=?, '
+    queryData.push(imgUrl)
+  }
+
+  if (title) {
+    console.log(title)
+    query += 'title=?, '
+    queryData.push(title)
+  }
+  
+  if (price) {
+    console.log(price)
+    query += 'price=?, '
+    queryData.push(price)
+  }
+
+  if (year) {
+    query += 'year=?, '
+    queryData.push(year)
+  }
+
+  if (query === defaultQuery) res.sendStatus(500)
+  else {
+    query = query.trim()
+    query = query.slice(0, query.length - 1)
+    query = query + ' WHERE id=?'
+    queryData.push(id)
+
+    db.query(query, queryData, (err, result) => {
+      if (err) {
+        console.log(err)
+        res.sendStatus(400)
+      }
+      else {
+        console.log(result)
+        return res.status(200).send("DADOS ATUALIZADOS")
+      }
+    })
+  }
+}
+
 async function shoppingCart(req, res) {
   const games = await getQueryRes('SELECT * FROM cart')
 
@@ -144,7 +195,7 @@ async function loginAdmin(req, res) {
       expiresIn: process.env.JWT_EXPIRES_IN
     }, (err, token) => {
       if (err) return res.status(500).send(err)
-      else return res.status(200).send({success: true, token: token})
+      else return res.status(200).send({success: true, token: token, loggedUser: admin.username})
     })
   } else {
     return res.status(401).send({ message: "username or password incorrect" })
@@ -156,6 +207,7 @@ module.exports = {
   searchGame,
   getGamebyId,
   deleteGame,
+  updateGame,
   shoppingCart,
   addGameToCart,
   addGame,
