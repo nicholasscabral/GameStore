@@ -141,7 +141,7 @@ function addGame(req, res) {
 
   db.query('INSERT INTO catalog SET ?', {title: title, price: price, year: year, imgUrl: imgUrl}, (err, result) => {
     if (err) return res.status(500).send(err);
-    else return res.status(200).send('JOGO CADASTRADO')
+    else return res.status(200).send({message: 'JOGO CADASTRADO', success: true});
   })
 }
 

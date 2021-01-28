@@ -46,7 +46,7 @@ function AdminPage() {
     console.log(gameId);
     if (window.confirm("Are you sure you want to delete this game")) {
       api.post('/deleteGame/' + gameId).then(response => {
-        if (response.data.success) window.location.reload()
+        if (response.data.success) alert(response.data.message);
       })
     } else return 
   }
@@ -68,7 +68,7 @@ function AdminPage() {
 
   useEffect(() => {
     getCatalog();
-  }, [])
+  }, [games])
 
   return (
     <div>
