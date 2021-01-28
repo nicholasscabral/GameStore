@@ -3,6 +3,7 @@ import api from '../services/api';
 
 import logo from '../assets/logo.svg'
 import add from '../assets/add.svg'
+import Modal, {showModal} from '../components/Modal'
 
 import '../styles/Admin.css'
 import '../styles/Global.css'
@@ -41,10 +42,6 @@ function AdminPage() {
     });
   }
 
-  async function addGame() {
-    setSelectedGame([])
-  }
-
   async function removeGame(gameId) {
     console.log(gameId);
     if (window.confirm("Are you sure you want to delete this game")) {
@@ -79,7 +76,7 @@ function AdminPage() {
       <nav>
         <a href="/"><img src={logo} alt=""/></a>
         <ul>
-          <li><button onClick={() => {addGame()}}><img src={add}/>Add game</button></li>
+          <li><button onClick={() => {showModal()}}><img src={add}/>Add game</button></li>
           <li><h3>{`Hi, ${loggedUser}`}</h3></li>
         </ul>
       </nav>
@@ -118,6 +115,9 @@ function AdminPage() {
           )}
         </div>
       </div>
+      
+      <Modal />
+
     </div>
   )
 }
