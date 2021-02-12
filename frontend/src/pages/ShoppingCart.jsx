@@ -15,19 +15,19 @@ function ShoppingCart() {
   function getShoppingCart() {
     api.get('/shoppingCart').then(response =>{
       const games = response.data
+      var auxprice = 0
       setGames(games)
 
       if (games.length > 0) {
-        games.forEach(game => {
-          setTotalPrice(prevValue => prevValue + Number(game.price))
-        })
+        games.forEach(game => auxprice += Number(game.price))
       }
+      setTotalPrice(auxprice)
     })
   }
 
   useEffect(() => {
     getShoppingCart()
-  }, [])
+  }, [games])
   
   return (
     <div>

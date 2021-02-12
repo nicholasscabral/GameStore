@@ -28,6 +28,5 @@ export function removeGameFromCart(gameId) {
   api.post('/deleteFromCart/' + gameId).then(response => {
     const success = response.data.success
     
-    if (success) window.location.reload()
   })
 }
