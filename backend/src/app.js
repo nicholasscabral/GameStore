@@ -1,49 +1,15 @@
-const { 
-  getCatalog, 
-  searchGame,
-  getGamebyId, 
-  shoppingCart,
-  deleteGame, 
-  updateGame, 
-  addGameToCart, 
-  addGame, 
-  removeGameFromCart,
-  registerAdmin,
-  loginAdmin
-} = require('./routes/routes')
+import { router } from './routes';
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-const app = express()
+const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());  
+app.use(router)
 
-app.get('/catalog', getCatalog)
 
-app.get('/searchGame/:searchValue', searchGame)
-
-app.get('/getGame/:id', getGamebyId)
-
-app.get('/shoppingCart', shoppingCart)
-
-app.post('/addCart/:id', addGameToCart)
-
-app.post('/addGame', addGame)
-
-app.post('/deleteGame/:id', deleteGame)
-
-app.post('/updateGame/:id', updateGame)
-
-app.post('/deleteFromCart/:id', removeGameFromCart)
-
-app.post('/register-admin', registerAdmin)
-
-app.post('/admin-auth', loginAdmin)
-
-app.listen(4000, () => {
-  console.log("API running...")
-})
+export { app }
