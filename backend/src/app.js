@@ -1,4 +1,4 @@
-import { router } from './routes';
+const router = require('./routes');
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -12,4 +12,4 @@ app.use(cors());
 app.use(router)
 
 
-export { app }
+module.exports = app;

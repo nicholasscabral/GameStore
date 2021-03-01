@@ -1,20 +1,24 @@
 const { Router } = require('express');
 const router = Router();
 
-import { GameController } from './controllers/GameControllers'
+const GameController = require('./controllers/GameController')
 
-const gameController = new GameController();
+// Store routes
+router.get("/catalog", GameController.catalog);
+// router.get("/shoppingCart", shoppingCart);
+// router.post("/addCart/:id", addGameToCart);
+// router.post("/deleteFromCart/:id", removeGameFromCart);
+// router.get("/searchGame/:searchValue", searchGame);
 
-router.get("/catalog", getCatalog);
-router.get("/searchGame/:searchValue", searchGame);
-router.get("/getGame/:id", getGamebyId);
-router.get("/shoppingCart", shoppingCart);
-router.post("/addCart/:id", addGameToCart);
-router.post("/addGame", gameController.create);
-router.post("/deleteGame/:id", deleteGame);
-router.post("/updateGame/:id", updateGame);
-router.post("/deleteFromCart/:id", removeGameFromCart);
-router.post("/register-admin", registerAdmin);
-router.post("/admin-auth", loginAdmin);
+// Game routes
+router.post("/games", GameController.create);
+router.get("/getGame", GameController.search)
+// router.post("/deleteGame/:id", deleteGame);
+// router.post("/updateGame/:id", updateGame);
+// router.get("/getGame/:id", GameController.searchById);
 
-export { router }
+// Admin routes
+// router.post("/register-admin", registerAdmin);
+// router.post("/admin-auth", loginAdmin);
+
+module.exports = router;
