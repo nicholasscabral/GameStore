@@ -43,6 +43,16 @@ class GameController {
 
     return res.send(game)
   }
+
+  async delete(req, res) {
+    const id = req.params.id
+
+    await Game.delete(id)
+  }
+
+  async update(req, res) {
+
+  }
 }
 
 module.exports = new GameController();

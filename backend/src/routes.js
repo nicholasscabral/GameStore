@@ -13,8 +13,8 @@ router.get("/catalog", GameController.catalog);
 // Game routes
 router.post("/games", GameController.create);
 router.get("/getGame", GameController.search)
-// router.post("/deleteGame/:id", deleteGame);
-// router.post("/updateGame/:id", updateGame);
+router.post("/deleteGame/:id", GameController.delete);
+router.post("/updateGame/:id", GameController.update);
 // router.get("/getGame/:id", GameController.searchById);
 
 // Admin routes

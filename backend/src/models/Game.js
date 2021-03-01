@@ -1,4 +1,4 @@
-const db = require('../database/connection');
+const knex = require('../database/connection');
 const Promise = require('bluebird');
 
 const getQueryRes = async (query) => new Promise((resolve, reject) => {
@@ -12,18 +12,20 @@ const getQueryRes = async (query) => new Promise((resolve, reject) => {
 class Game {
   async new(title, price, year, imgUrl) {
     try {
-      db.query('INSERT INTO catalog SET ?', {title: title, price: price, year: year, imgUrl: imgUrl}, 
-      (err, result) => {
-        return (result) ? true : false;
-      })
+      return await knex('catalog').insert({title, price, year, imgUrl});
+
     } catch (err) {
       console.log(err);
     }    
   } 
 
+  async delete(id) {
+    return await knex('catalog').where({id: id}).del()
+  }
+
   async findAll() {
     try {
-      return getQueryRes('SELECT * FROM catalog')
+      return await knex.select('*').from('catalog')
 
     } catch (err) {
       console.log(err);
@@ -32,8 +34,7 @@ class Game {
 
   async find(title) {
     try {
-      const results = getQueryRes(`SELECT * FROM catalog WHERE title LIKE '%${title}%'`)
-      return results
+      return await knex('catalog').where('title', 'like', `${title}%`)
       
     } catch (err) {
       console.log(err);
@@ -42,7 +43,7 @@ class Game {
 
   async findOneByTitle(title) {
     try {
-      const result = await getQueryRes(`SELECT * FROM catalog WHERE title = '${title}'`)
+      const result = await knex('catalog').where('title', title);
       return (result.length > 0) ? true : false
 
     } catch (err) {
@@ -50,9 +51,6 @@ class Game {
     }
   }
 
-  async findById(id) {
-    
-  }
 
 }
 
