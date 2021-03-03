@@ -40,8 +40,12 @@ class GameController {
     const id = req.params.id
 
     const game = await Game.findById(id)
+    
+    if(!game) {
+      return res.status(404).send({message: 'Game not found'})
+    }
 
-    return res.send(game)
+    return res.status(200).send(game)
   }
 
   async delete(req, res) {
