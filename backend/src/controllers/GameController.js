@@ -48,11 +48,28 @@ class GameController {
     const id = req.params.id
 
     await Game.delete(id)
+
+    res.status(200).send({message: 'game deleted', success: true})
   }
 
-  async update(req, res) {
+  async edit(req, res) {
+    const id = req.params.id
+    const { title, price, year, imgUrl } = req.body;
+    const editField = {
+      title,
+      price,
+      year,
+      imgUrl,
+    }
 
+    const result = await Game.update(id, editField)
+    if(result.success) 
+      res.status(200).send({message: 'game updated', success: true})
+
+    else
+      res.status(400).send(result.err)
   }
+  
 }
 
 module.exports = new GameController();
