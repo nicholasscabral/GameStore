@@ -1,23 +1,21 @@
-const knex = require('../database/connection');
+const knex = require("../database/connection");
 
 class Game {
   async new(title, price, year, imgUrl) {
     try {
-      return await knex('catalog').insert({title, price, year, imgUrl});
-
+      return await knex("catalog").insert({ title, price, year, imgUrl });
     } catch (err) {
       console.log(err);
-    }    
-  } 
+    }
+  }
 
   async delete(id) {
-    return await knex('catalog').where('id', id).del()
+    return await knex("catalog").where("id", id).del();
   }
 
   async findAll() {
     try {
-      return await knex.select('*').from('catalog')
-
+      return await knex.select("*").from("catalog");
     } catch (err) {
       console.log(err);
     }
@@ -25,8 +23,7 @@ class Game {
 
   async find(title) {
     try {
-      return await knex('catalog').where('title', 'like', `${title}%`)
-      
+      return await knex("catalog").where("title", "like", `${title}%`);
     } catch (err) {
       console.log(err);
     }
@@ -34,21 +31,19 @@ class Game {
 
   async findOneByTitle(title) {
     try {
-      const result = await knex('catalog').where('title', title);
-      return (result.length > 0) ? true : false
-
+      const result = await knex("catalog").where("title", title);
+      return result.length > 0 ? true : false;
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
   async findById(id) {
     try {
-      const result = await knex('catalog').where('id', id);
-      return (result.length > 0) ? result[0] : undefined
-
+      const result = await knex("catalog").where("id", id);
+      return result.length > 0 ? result[0] : undefined;
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
@@ -58,39 +53,33 @@ class Game {
       const { title, price, year, imgUrl } = data;
 
       if (!game) {
-        return { status: false, message: 'game does not exist'}
-      }
-      else {
-        
-        var editGame = {}
+        return { status: false, message: "game does not exist" };
+      } else {
+        var editGame = {};
 
-        if(title) {
+        if (title) {
           editGame.title = title;
         }
 
-        if(price) {
+        if (price) {
           editGame.price = price;
         }
 
-        if(year) {
+        if (year) {
           editGame.year = year;
         }
 
-        if(imgUrl) {
+        if (imgUrl) {
           editGame.imgUrl = imgUrl;
         }
 
-        await knex('catalog').where('id', id).update(editGame);
-        return { success: true }
-
+        await knex("catalog").where("id", id).update(editGame);
+        return { success: true };
       }
-
     } catch (err) {
-      return { success: false, err: err }
+      return { success: false, err: err };
     }
-
   }
-  
 }
 
 module.exports = new Game();

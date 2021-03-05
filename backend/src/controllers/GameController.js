@@ -1,4 +1,4 @@
-const Game = require('../models/Game');
+const Game = require("../models/Game");
 
 class GameController {
   async create(req, res) {
@@ -8,72 +8,67 @@ class GameController {
       return res.status(400).send({ error: "fields are missing" });
     }
 
-    const gameAlreadyExists = await Game.findOneByTitle(title)
+    const gameAlreadyExists = await Game.findOneByTitle(title);
 
     if (gameAlreadyExists) {
       return res.status(404).send({ error: "game already registered" });
     }
-    
+
     await Game.new(title, price, year, imgUrl);
-    
-    res.status(201).json({message: 'game registered', success: true});
+
+    res.status(201).json({ message: "game registered", success: true });
   }
 
   async catalog(req, res) {
-    const catalog = await Game.findAll()
+    const catalog = await Game.findAll();
 
-    if(catalog.length > 0)
-      return res.send(catalog);
-    else 
-      return res.status(404).send("No game found");
+    if (catalog.length > 0) return res.send(catalog);
+    else return res.status(404).send("No game found");
   }
 
   async search(req, res) {
-    const { title } = req.body
+    const { title } = req.body;
 
-    const result = await Game.find(title)
+    const result = await Game.find(title);
 
-    return res.status(200).send(result)
+    return res.status(200).send(result);
   }
 
   async searchById(req, res) {
-    const id = req.params.id
+    const id = req.params.id;
 
-    const game = await Game.findById(id)
-    
-    if(!game) {
-      return res.status(404).send({message: 'Game not found'})
+    const game = await Game.findById(id);
+
+    if (!game) {
+      return res.status(404).send({ message: "Game not found" });
     }
 
-    return res.status(200).send(game)
+    return res.status(200).send(game);
   }
 
   async delete(req, res) {
-    const id = req.params.id
+    const id = req.params.id;
 
-    await Game.delete(id)
+    await Game.delete(id);
 
-    res.status(200).send({message: 'game deleted', success: true})
+    res.status(200).send({ message: "game deleted", success: true });
   }
 
   async edit(req, res) {
-    const id = req.params.id
+    const id = req.params.id;
     const { title, price, year, imgUrl } = req.body;
     const editField = {
       title,
       price,
       year,
       imgUrl,
-    }
+    };
 
-    const result = await Game.update(id, editField)
-    if(result.success) 
-      res.status(200).send({message: 'game updated', success: true})
-
-    else
-      res.status(400).send(result.err)
+    const result = await Game.update(id, editField);
+    if (result.success)
+      res.status(200).send({ message: "game updated", success: true });
+    else res.status(400).send(result.err);
   }
-  
 }
 
 module.exports = new GameController();

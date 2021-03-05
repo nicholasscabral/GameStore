@@ -1,8 +1,8 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
 
-const GameController = require('./controllers/GameController')
-const AdminController = require('./controllers/AdminController')
+const GameController = require("./controllers/GameController");
+const AdminController = require("./controllers/AdminController");
 
 // Store routes
 // router.get("/shoppingCart", shoppingCart);
@@ -20,6 +20,6 @@ router.get("/game/:id", GameController.searchById);
 
 // Admin routes
 router.post("/admin", AdminController.register);
-router.post("/admin-auth", loginAdmin);
+router.post("/admin/auth", loginAdmin);
 
 module.exports = router;
