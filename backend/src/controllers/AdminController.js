@@ -1,7 +1,42 @@
+require("dotenv").config();
 const Admin = require("../models/Admin");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 class AdminController {
-  async login(req, res) {}
+  async login(req, res) {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).send({ message: "Invalid credentials" });
+    }
+
+    const admin = await Admin.findByUsername(username);
+
+    if (!admin) {
+      return res.status(404).send({ message: "Invalid username or password" });
+    }
+
+    var passwordMatches = await bcrypt.compare(password, admin.password);
+
+    if (!passwordMatches) {
+      return res.status(401).send({ message: "Invalid username or password" });
+    }
+
+    const token = await jwt.sign(
+      { id: admin.id, username: admin.username },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
+
+    if (!token) {
+      return res.status(500).send({ message: "Internal server error." });
+    }
+
+    return res
+      .status(200)
+      .send({ success: true, token: token, loggedUser: admin.username });
+  }
 
   async register(req, res) {
     const { username, email, password, passwordConfirm } = req.body;

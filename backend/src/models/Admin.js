@@ -12,6 +12,16 @@ class Admin {
     }
   }
 
+  async findByUsername(username) {
+    try {
+      const result = await knex("admin").where("username", username);
+
+      return result.length > 0 ? result[0] : null;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async new(username, email, password) {
     try {
       const hashedPassword = await bcrypt.hash(password, 8);

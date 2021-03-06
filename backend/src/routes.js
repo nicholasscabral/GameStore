@@ -20,6 +20,6 @@ router.get("/game/:id", GameController.searchById);
 
 // Admin routes
 router.post("/admin", AdminController.register);
-router.post("/admin/auth", loginAdmin);
+router.post("/admin/auth", AdminController.login);
 
 module.exports = router;
