@@ -19,7 +19,9 @@ router.put("/game/:id", GameController.edit);
 router.get("/game/:id", GameController.searchById);
 
 // Admin routes
+router.get("/admins", AdminController.index);
 router.post("/admin", AdminController.register);
 router.post("/admin/auth", AdminController.login);
+router.delete("/admin/:id", AdminController.delete);
 
 module.exports = router;

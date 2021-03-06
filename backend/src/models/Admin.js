@@ -2,6 +2,14 @@ const knex = require("../database/connection");
 const bcrypt = require("bcryptjs");
 
 class Admin {
+  async findAll() {
+    try {
+      return knex("admin").select(["id", "username", "email"]);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async find(email) {
     try {
       const result = await knex("admin").where("email", email);
@@ -12,6 +20,17 @@ class Admin {
     }
   }
 
+  async findById(id) {
+    try {
+      const result = await knex("admin").where("id", id);
+
+      return result.length > 0 ? result[0] : null;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+
   async findByUsername(username) {
     try {
       const result = await knex("admin").where("username", username);
@@ -19,6 +38,7 @@ class Admin {
       return result.length > 0 ? result[0] : null;
     } catch (err) {
       console.log(err);
+      return null;
     }
   }
 
@@ -33,6 +53,25 @@ class Admin {
       });
 
       return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
+  async delete(id) {
+    try {
+      return await knex("admin").where("id", id).del();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async update(id, data) {
+    try {
+      const { username, email, password } = data;
+
+      var editAdmin = {};
     } catch (err) {
       console.log(err);
       return false;

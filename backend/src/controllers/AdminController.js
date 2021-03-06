@@ -45,14 +45,20 @@ class AdminController {
       return res.send(400).send({ message: "Invalid credentials" });
     }
 
-    if (password != passwordConfirm) {
-      return res.status(400).send({ message: "Passwords do not match" });
-    }
-
     const emailAlreadyExist = await Admin.find(email);
 
     if (emailAlreadyExist) {
       return res.status(400).send({ message: "Email already in use" });
+    }
+
+    const usernameAlreadyExist = await Admin.findByUsername(username);
+
+    if (usernameAlreadyExist) {
+      return res.status(400).send({ message: "Username already in use" });
+    }
+
+    if (password != passwordConfirm) {
+      return res.status(400).send({ message: "Passwords do not match" });
     }
 
     const success = await Admin.new(username, email, password);
@@ -65,6 +71,23 @@ class AdminController {
 
     return res.status(201).send({ success: true, message: "Admin registered" });
   }
-}
+
+  async delete(req, res) {
+    const id = req.params.id;
+
+    await Admin.delete(id);
+
+    res.status(200).send({ success: true, message: "Admin deleted" });
+  }
+
+  async index(req, res) {
+    const admins = await Admin.findAll();
+
+    if (admins) {
+      return res.status(200).send(admins);
+    }
+  }
+
+  
 
 module.exports = new AdminController();
