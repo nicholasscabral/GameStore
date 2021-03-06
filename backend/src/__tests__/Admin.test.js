@@ -37,4 +37,13 @@ describe("Admins", () => {
 
     expect(response.statusCode).toBe(400);
   });
+
+  it("should be able to log an admin", async () => {
+    const response = await request(app).post("/admin/auth").send({
+      username: "adminTest",
+      password: "test123",
+    });
+
+    expect(response.statusCode).toBe(200);
+  });
 });
