@@ -92,10 +92,10 @@ class AdminController {
     const id = req.params.id;
     const { username, email, password, passwordConfirm } = req.body;
 
-    const user = await Admin.findById(id);
+    const admin = await Admin.findById(id);
 
     // verificando se o usuario existe
-    if (!user) {
+    if (!admin) {
       return res.status(404).send({ message: "this User does not exist" });
     }
 
@@ -122,9 +122,15 @@ class AdminController {
       return res
         .status(400)
         .send({ message: "passwordConfirm field is required" });
-    } else if (password && passwordConfirm && password != passwordConfirm) {
+    }
+
+    if (password && passwordConfirm && password != passwordConfirm) {
       return res.status(400).send({ message: "Passwords do not match" });
-    } else if (password == user.password) {
+    }
+
+    const samePassword = await bcrypt.compare(password, admin.password);
+
+    if (samePassword) {
       return res
         .status(400)
         .send({ message: "enter a password different than yours" });
