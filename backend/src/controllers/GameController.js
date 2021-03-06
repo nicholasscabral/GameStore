@@ -22,8 +22,9 @@ class GameController {
   async catalog(req, res) {
     const catalog = await Game.findAll();
 
-    if (catalog.length > 0) return res.send(catalog);
-    else return res.status(404).send("No game found");
+    if (catalog) {
+      return res.status(200).send(catalog);
+    }
   }
 
   async search(req, res) {
@@ -57,6 +58,13 @@ class GameController {
   async edit(req, res) {
     const id = req.params.id;
     const { title, price, year, imgUrl } = req.body;
+
+    const gameExists = await Game.findById(id);
+
+    if (!gameExists) {
+      return res.status(404).send({ message: "this Game does not exist" });
+    }
+
     const editField = {
       title,
       price,
@@ -65,9 +73,12 @@ class GameController {
     };
 
     const result = await Game.update(id, editField);
-    if (result.success)
-      res.status(200).send({ message: "game updated", success: true });
-    else res.status(400).send(result.err);
+
+    if (!result.success) {
+      res.status(400).send(result.err);
+    }
+
+    res.status(204).send({ message: "game updated", success: true });
   }
 }
 

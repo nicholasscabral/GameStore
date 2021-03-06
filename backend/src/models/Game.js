@@ -10,12 +10,16 @@ class Game {
   }
 
   async delete(id) {
-    return await knex("catalog").where("id", id).del();
+    try {
+      return await knex("catalog").where("id", id).del();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async findAll() {
     try {
-      return await knex.select("*").from("catalog");
+      return await knex("catalog").select("*");
     } catch (err) {
       console.log(err);
     }
@@ -41,7 +45,8 @@ class Game {
   async findById(id) {
     try {
       const result = await knex("catalog").where("id", id);
-      return result.length > 0 ? result[0] : undefined;
+
+      return result.length > 0 ? result[0] : null;
     } catch (err) {
       console.log(err);
     }
@@ -49,34 +54,30 @@ class Game {
 
   async update(id, data) {
     try {
-      const game = await this.findById(id);
       const { title, price, year, imgUrl } = data;
 
-      if (!game) {
-        return { status: false, message: "game does not exist" };
-      } else {
-        var editGame = {};
+      var editGame = {};
 
-        if (title) {
-          editGame.title = title;
-        }
-
-        if (price) {
-          editGame.price = price;
-        }
-
-        if (year) {
-          editGame.year = year;
-        }
-
-        if (imgUrl) {
-          editGame.imgUrl = imgUrl;
-        }
-
-        await knex("catalog").where("id", id).update(editGame);
-        return { success: true };
+      if (title) {
+        editGame.title = title;
       }
+
+      if (price) {
+        editGame.price = price;
+      }
+
+      if (year) {
+        editGame.year = year;
+      }
+
+      if (imgUrl) {
+        editGame.imgUrl = imgUrl;
+      }
+
+      await knex("catalog").where("id", id).update(editGame);
+      return { success: true };
     } catch (err) {
+      console.log(err);
       return { success: false, err: err };
     }
   }
