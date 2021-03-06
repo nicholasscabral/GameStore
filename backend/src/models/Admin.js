@@ -72,9 +72,25 @@ class Admin {
       const { username, email, password } = data;
 
       var editAdmin = {};
+
+      if (username) {
+        editAdmin.username = username;
+      }
+
+      if (email) {
+        editAdmin.email = email;
+      }
+
+      if (password) {
+        const hashedPassword = await bcrypt.hash(password, 8);
+        editAdmin.password = hashedPassword;
+      }
+
+      await knex("admin").where("id", id).update(editAdmin);
+      return { success: true };
     } catch (err) {
       console.log(err);
-      return false;
+      return { success: false, err: err };
     }
   }
 }

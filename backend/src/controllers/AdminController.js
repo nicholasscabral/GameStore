@@ -88,6 +88,62 @@ class AdminController {
     }
   }
 
-  
+  async edit(req, res) {
+    const id = req.params.id;
+    const { username, email, password, passwordConfirm } = req.body;
+
+    const user = await Admin.findById(id);
+
+    // verificando se o usuario existe
+    if (!user) {
+      return res.status(404).send({ message: "this User does not exist" });
+    }
+
+    // verificando se o email ja esta em uso
+    if (email) {
+      const emailAlreadyExist = await Admin.find(email);
+
+      if (emailAlreadyExist) {
+        return res.status(403).send({ message: "Email already in use" });
+      }
+    }
+
+    // verificando se o username ja esta em uso
+    if (username) {
+      const usernameAlreadyExist = await Admin.findByUsername(username);
+
+      if (usernameAlreadyExist) {
+        return res.status(403).send({ message: "Username already in use" });
+      }
+    }
+
+    // se a senha for valida, a confirmação da senha tb deve ser valido
+    if (password && !passwordConfirm) {
+      return res
+        .status(400)
+        .send({ message: "passwordConfirm field is required" });
+    } else if (password && passwordConfirm && password != passwordConfirm) {
+      return res.status(400).send({ message: "Passwords do not match" });
+    } else if (password == user.password) {
+      return res
+        .status(400)
+        .send({ message: "enter a password different than yours" });
+    }
+
+    const editFields = {
+      username,
+      email,
+      password,
+    };
+
+    const result = await Admin.update(id, editFields);
+
+    if (!result.success) {
+      return res.status(400).send({ err: result.err });
+    }
+
+    res.status(204).send({ message: "Admin info updated", success: true });
+  }
+}
 
 module.exports = new AdminController();

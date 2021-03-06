@@ -23,5 +23,6 @@ router.get("/admins", AdminController.index);
 router.post("/admin", AdminController.register);
 router.post("/admin/auth", AdminController.login);
 router.delete("/admin/:id", AdminController.delete);
+router.put("/admin/:id", AdminController.edit);
 
 module.exports = router;
