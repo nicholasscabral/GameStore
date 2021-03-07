@@ -14,7 +14,7 @@ router.delete("/cart/:game_id", CartController.remove);
 // Game routes
 router.get("/games", GameController.catalog);
 router.post("/game", GameController.create);
-router.get("/game", GameController.search);
+router.get("/game/:searchValue", GameController.search);
 router.delete("/game/:id", GameController.delete);
 router.put("/game/:id", GameController.edit);
 router.get("/game/:id", GameController.searchById);

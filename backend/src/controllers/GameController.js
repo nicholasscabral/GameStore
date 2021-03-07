@@ -28,9 +28,9 @@ class GameController {
   }
 
   async search(req, res) {
-    const { title } = req.body;
+    const { searchValue } = req.params;
 
-    const result = await Game.find(title);
+    const result = await Game.find(searchValue);
 
     return res.status(200).send(result);
   }

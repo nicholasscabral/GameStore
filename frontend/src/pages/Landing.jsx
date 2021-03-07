@@ -13,7 +13,7 @@ function Landing() {
   const [games, setGames] = useState([]);
 
   function getCatalog() {
-    api.get("/catalog").then((response) => {
+    api.get("/games").then((response) => {
       const games = response.data;
       setGames(games);
     });
@@ -37,7 +37,15 @@ function Landing() {
                   <p>{game.title}</p>
                   <p>Preço: R$ {game.price}</p>
                   <p>Ano: {game.year}</p>
-                  <button onClick={() => {addGameToCart(game.id)}}> <img src={shoppingCart} alt="carrinho" /> Adicionar ao carrinho </button>
+                  <button
+                    onClick={() => {
+                      addGameToCart(game.id);
+                    }}
+                  >
+                    {" "}
+                    <img src={shoppingCart} alt="carrinho" /> Adicionar ao
+                    carrinho{" "}
+                  </button>
                 </div>
               </li>
             </div>
