@@ -3,10 +3,11 @@ const router = Router();
 
 const GameController = require("./controllers/GameController");
 const AdminController = require("./controllers/AdminController");
+const CartController = require("./controllers/CartController");
 
 // Store routes
-// router.get("/shoppingCart", shoppingCart);
-// router.post("/addCart/:id", addGameToCart);
+router.get("/cart", CartController.sync);
+router.post("/cart/:game_id", CartController.add);
 // router.post("/deleteFromCart/:id", removeGameFromCart);
 // router.get("/searchGame/:searchValue", searchGame);
 
