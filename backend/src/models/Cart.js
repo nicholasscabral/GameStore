@@ -36,6 +36,17 @@ class Cart {
       return false;
     }
   }
+
+  async remove(id) {
+    try {
+      await knex("cart").where("game_id", id).del();
+
+      return { success: true };
+    } catch (err) {
+      console.log(err);
+      return { success: false };
+    }
+  }
 }
 
 module.exports = new Cart();

@@ -8,7 +8,7 @@ const CartController = require("./controllers/CartController");
 // Store routes
 router.get("/cart", CartController.sync);
 router.post("/cart/:game_id", CartController.add);
-// router.post("/deleteFromCart/:id", removeGameFromCart);
+router.delete("/cart/:game_id", CartController.remove);
 // router.get("/searchGame/:searchValue", searchGame);
 
 // Game routes
